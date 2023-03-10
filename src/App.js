@@ -2,9 +2,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"
 import { useState } from "react";
 import './App.css';
-import snow from "./snow.jpg";
-import normal from "./normal.jpg";
-import day from "./day.jpg";
+import cloud from './image.png'
 
 function App() {
 
@@ -18,9 +16,9 @@ function App() {
     if (!cityName) return
     const apiURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + apiKey
     axios.get(apiURL).then((res) => {
+      setTemp(((data?.main?.temp) - 273.15).toFixed(2));
       console.log("response", res.data)
       setData(res.data)
-      setTemp(((data?.main?.temp) - 273.15).toFixed(2));
     }).catch((err) => {
       console.log("err", err)
     })
@@ -51,12 +49,12 @@ function App() {
         </div>
       </div>
 
-      {Object.keys(data).length > 0 &&
+      {data?.name &&
         <div className="col-md-12 text-center mt-5">
 
           <div className="shadow rounded wetherResultBox">
-          <img className="weathorIcon rounded-pill"
-              src={temp<=5?snow:temp>5&&temp<=35?normal:temp>35?day:''} />
+          <img className="weathorIcon"
+              src={cloud} />
 
             <h5 className="weathorCity">
               {data?.name}
